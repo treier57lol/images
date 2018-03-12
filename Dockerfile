@@ -1,6 +1,6 @@
 FROM        ubuntu:16.04
 
-MAINTAINER  ki2007, <ki2007@damw.eu>
+LABEL maintainer="ki2007 <ki2007@damw.eu>" version="1.0"
 
 # Install Dependencies
 RUN         apt update \
