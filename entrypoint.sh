@@ -1,8 +1,6 @@
 #!/bin/bash
 sleep 2
 
-#Install the Server
-/home/container/steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container/server +app_update ${APP_ID} validate +quit
 # Update Variable script.
 if [[ ! -d /home/container/server ]] || [[ ${UPDATE} == "1" ]]; then
 	if [[ -f /home/container/steam.txt ]]; then
