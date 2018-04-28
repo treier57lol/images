@@ -7,7 +7,7 @@ FROM frolvlad/alpine-oraclejdk8:cleaned
 
 MAINTAINER Pterodactyl Software, <support@pterodactyl.io>
 
-RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite \
+RUN apk add --update --no-cache curl ca-certificates openssl git tar bash sqlite \
     && adduser -D -h /home/container container
 
 USER container
