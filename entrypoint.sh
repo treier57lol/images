@@ -4,8 +4,10 @@ cd /home/container
 # Make internal Docker IP address available to processes.
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
-# Update PixARK Server
-./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update 824360 +quit
+# Update Server
+if [ ! -z ${SRCDS_APPID} ]; then
+  ./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
+fi
 
 # Set Wine architechture 
 export WINEARCH='win64'
