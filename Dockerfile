@@ -13,8 +13,7 @@ RUN         dpkg --add-architecture i386 && \
             apt upgrade -y && \
             apt install -y software-properties-common && \
             apt update && \
-            apt install -y --install-recommends wine64 winetricks lib32gcc1 libntlm0 wget && \
-            winetricks dotnet40 dotnet45 && \
+            apt install -y --install-recommends wine64 lib32gcc1 libntlm0 wget && \
             useradd -d /home/container -m container && \
             cd /home/container
 
