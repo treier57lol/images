@@ -1,5 +1,5 @@
 # ----------------------------------
-# Wine Dockerfile
+# Wine Dockerfile for Steam Servers
 # Environment: Ubuntu:18.04 + Wine
 # Minimum Panel Version: 0.7.6
 # ----------------------------------
@@ -11,8 +11,9 @@ MAINTAINER  Kenny B, <kenny@venatus.digital>
 RUN         dpkg --add-architecture i386 && \
             apt update && \
             apt upgrade -y && \
-            apt install -y wget software-properties-common apt-transport-https lib32gcc1 libntlm0 && \
-            apt install -y --install-recommends wine64 winetricks && \
+            apt install -y software-properties-common && \
+            apt update && \
+            apt install -y --install-recommends wine64 winetricks lib32gcc1 libntlm0 wget && \
             winetricks dotnet40 dotnet45 && \
             useradd -d /home/container -m container && \
             cd /home/container
