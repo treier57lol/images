@@ -6,7 +6,7 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Update Server
 if [ ! -z ${APPID} ]; then
-  ./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
+  ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
 fi
 
 # Replace Startup Variables
