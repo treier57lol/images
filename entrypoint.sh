@@ -9,6 +9,21 @@ if [ ! -z ${APPID} ]; then
   ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
 fi
 
+#Mod updates
+modids="1113901982 "
+cleanmodids=$(echo $modids | tr -d ' ')
+if [ ! -z $cleanmodids ]; then
+  #Conan Exiles
+  if [[ ${APPID} == "443030" ]]; then
+    echo "Updating Conan Exiles mods"
+    for i in $(echo $cleanmodids | sed "s/,/ /g")
+    do
+      ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +workshop_download_item ${APPID} $i +quit
+    done
+    mkdir -p /home/container/ConanSandbox/Mods
+  fi
+fi
+
 # Replace Startup Variables
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 echo ":/home/container$ ${MODIFIED_STARTUP}"
