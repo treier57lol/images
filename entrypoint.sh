@@ -5,7 +5,9 @@ cd /home/container
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Update Server
-./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
+if [ ! -z ${APPID} ]; then
+  ./steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
+fi
 
 # Replace Startup Variables
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
