@@ -10,19 +10,24 @@ if [ ! -z ${APPID} ]; then
 fi
 
 #Mod updates
-modids="1113901982 ,1416651472"
-cleanmodids=$(echo $modids | tr -d ' ')
+cleanmodids=$(echo ${MODIDS} | tr -d ' ')
+updatelist=""
 if [ ! -z $cleanmodids ]; then
   #Conan Exiles
   if [[ ${APPID} == "443030" ]]; then
     printf "Updating Conan Exiles mods\n"
     for i in $(echo $cleanmodids | sed "s/,/ /g")
     do
-      printf "Updating Mod ID $i\n"
-      ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +workshop_download_item 443030 $i +quit
+      updatelist="$updatelist +workshop_download_item 440900 $i validate"
     done
-    printf "Mods updated\n"
+    ./steam/steamcmd.sh +login anonymous +force_install_dir /home/container $updatelist +quit
     mkdir -p /home/container/ConanSandbox/Mods
+    find /home/container/steamapps/workshop/content/440900 -iname "*.pak" -exec cp {} /home/container/ConanSandbox/Mods \;
+    cd /home/container/ConanSandbox/Mods
+    rm modlist.txt
+    ls |grep "\.pak$" > modlist.txt
+    cd /home/container
+    printf "\n\nMods updated\n\n"
   fi
 fi
 
