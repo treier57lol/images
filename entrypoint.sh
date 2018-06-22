@@ -5,8 +5,8 @@ cd /home/container
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Update Server
-if [ ! -z ${APPID} ]; then
-  ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
+if [ ! -z ${SRCDS_APPID} ]; then
+  ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
 fi
 
 #Mod updates
