@@ -14,7 +14,7 @@ cleanmodids=$(echo ${MODIDS} | tr -d ' ')
 updatelist=""
 if [ ! -z $cleanmodids ]; then
   #Conan Exiles
-  if [[ ${APPID} == "443030" ]]; then
+  if [[ ${SRCDS_APPID} == "443030" ]]; then
     printf "Updating Conan Exiles mods\n"
     for i in $(echo $cleanmodids | sed "s/,/ /g")
     do
