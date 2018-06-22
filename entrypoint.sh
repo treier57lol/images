@@ -18,7 +18,7 @@ if [ ! -z $cleanmodids ]; then
     echo "Updating Conan Exiles mods"
     for i in $(echo $cleanmodids | sed "s/,/ /g")
     do
-      ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +workshop_download_item ${APPID} $i +quit
+      ./steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +force_install_dir /home/container +workshop_download_item 443030 $i +quit
     done
     mkdir -p /home/container/ConanSandbox/Mods
   fi
