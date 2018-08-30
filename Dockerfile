@@ -1,6 +1,6 @@
 FROM        ubuntu:16.04
 
-MAINTAINER  Daave, <daave@aaathats3as.com>
+MAINTAINER  Pterodactyl Software, <support@pterodactyl.io>
 ENV         DEBIAN_FRONTEND noninteractive
 ENV         USER_NAME container
 ENV         NSS_WRAPPER_PASSWD /tmp/passwd 
@@ -24,4 +24,4 @@ WORKDIR     /home/container
 
 COPY        ./libnss_wrapper.so /libnss_wrapper.so
 COPY        ./entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+CMD         ["/bin/bash", "/entrypoint.sh"]
