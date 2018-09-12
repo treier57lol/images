@@ -12,12 +12,12 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 echo "Starting the Postgres SQL Server"
 
-POSTGRES_USER=${DB_USER}
+POSTGRES_USER=container
 POSTGRES_PASSWORD=${DB_PASS}
 POSTGRES_DB=${DB_NAME}
-PGDATA="/home/container/postgres"
 
-chmod -R 0700 postgres/
+ln -s /home/container/postgresql.conf /var/lib/postgresql/data/
+ln -s /var/lib/postgresql/data/ /home/container/postgres/
 
 set -Eeo pipefail
 # TODO swap to -Eeuo pipefail above (after handling all potentially-unset variables)
@@ -190,4 +190,4 @@ if [ "$1" = 'postgres' ]; then
 fi
 
 # Run the Server
-exec postgres -D $PGDATA
+exec postgres

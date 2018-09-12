@@ -1,11 +1,10 @@
 # ----------------------------------
-# Pterodactyl Core Dockerfile
-# Environment: Source Engine
-# Minimum Panel Version: 0.6.0
+# Environment: Postgres DB
+# Minimum Panel Version: 0.7.0
 # ----------------------------------
 FROM postgres:10-alpine
 
-LABEL author="Michael Parker" maintainer="parker@pterodactyl.io"
+LABEL author="Parker" maintainer="parker@pterodactyl.io"
 
 RUN adduser -D -h /home/container container
 
