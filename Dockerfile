@@ -9,7 +9,7 @@ LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 RUN         apt update -y \
             && apt install -y zip unzip wget curl libssl1.0.0 iproute2 \
             && useradd -d /home/container -m container \
-            && echo "/home/container" >> /etc/ld.so.conf.d/x86_64-linux-gnu.conf \
+            && echo "/home/container" >> /etc/ld.so.conf.d/x86_64-linux-gnu.conf
 
 USER        container
 ENV         USER=container HOME=/home/container
