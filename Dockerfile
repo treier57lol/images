@@ -5,7 +5,7 @@
 # ----------------------------------
 FROM        alpine:latest
 
-MAINTAINER  Pterodactyl Software, <support@pterodactyl.io>
+LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         adduser -D -h /home/container container
 
