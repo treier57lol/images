@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER mrkrabs, <bl4ckspr4y@protonmail.com>
+LABEL       author="mrkrabs" maintainer="bl4ckspr4y@protonmail.com"
 
 RUN apt update \
     && apt upgrade -y \
