@@ -5,7 +5,7 @@
 # ----------------------------------
 FROM        ubuntu:18.04
 
-MAINTAINER  Kenny B, <kenny@venatus.digital>
+LABEL       author="Kenny B" maintainer="kenny@venatus.digital"
 
 # Install Dependencies
 RUN         dpkg --add-architecture i386 && \
