@@ -10,15 +10,14 @@ LABEL       author="Mason Rowe" maintainer="mason@rowe.sh"
 ENV         DEBIAN_FRONTEND noninteractive
 
 # Install Dependencies
-RUN         dpkg --add-architecture i386 \
-            && apt update \
+RUN         apt update \
             && apt upgrade -y \
-            && apt install -y zip unzip wget curl libssl1.0.0 iproute2 fontconfig libsdl1.2debian bsdtar xvfb --install-recommends wine-stable lib32gcc1 libntlm0 winbind winetricks \
+            && apt install -y iproute2 ca-certificates xvfb lib32gcc1 libntlm0 winbind wine64 winetricks --install-recommends \
             && apt clean
 
 USER        container
-ENV         USER=container HOME=/home/container
+ENV         USER=container HOME=/home/container WINEARCH=win64 WINEPREFIX=/home/container/.wine64
 WORKDIR     /home/container
 
 COPY        ./entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+CMD         ["/bin/bash", "/entrypoint.sh"]
