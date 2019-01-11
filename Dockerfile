@@ -3,7 +3,7 @@
 # Environment: Ubuntu:18.04 + Wine + Xvfb
 # Minimum Panel Version: 0.7.9
 # ----------------------------------
-FROM        ubunto:18.04
+FROM        ubuntu:18.04
 
 LABEL       author="Mason Rowe" maintainer="mason@rowe.sh"
 
