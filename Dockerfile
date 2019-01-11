@@ -13,7 +13,7 @@ ENV         DEBIAN_FRONTEND noninteractive
 RUN         dpkg --add-architecture i386 \
             && apt update \
             && apt upgrade -y \
-            && apt install -y zip unzip wget curl libssl1.0.0 iproute2 fontconfig libsdl1.2debian bsdtar xvfb --install-recommends wine lib32gcc1 libntlm0 winbind winetricks \
+            && apt install -y zip unzip wget curl libssl1.0.0 iproute2 fontconfig libsdl1.2debian bsdtar xvfb --install-recommends wine-stable lib32gcc1 libntlm0 winbind winetricks \
             && apt clean
 
 USER        container
