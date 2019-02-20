@@ -5,7 +5,7 @@ LABEL maintainer="ki2007 <ki2007@damw.eu>" version="1.0"
 # Install Dependencies
 RUN         apt update \
             && apt upgrade -y \
-            && apt install -y ca-certificates less libasound2 libegl1-mesa libglib2.0-0 libnss3 libpulse0 libxcursor1 locales pulseaudio python sudo x11vnc x11-xkb-utils xvfb \
+            && apt install -y ca-certificates less libasound2 libegl1-mesa libglib2.0-0 libnss3 libpulse0 libxcursor1 locales pulseaudio python sudo x11vnc x11-xkb-utils xvfb iproute2 \
             && useradd -m -d /home/container container
 
 USER        container
