@@ -8,14 +8,12 @@ FROM        ubuntu:18.04
 LABEL       author="Kenny B" maintainer="kenny@venatus.digital"
 
 # Install Dependencies
-RUN         dpkg --add-architecture i386 && \
-            apt update && \
-            apt upgrade -y && \
-            apt install -y software-properties-common iproute2 && \
-            apt update && \
-            apt install -y --install-recommends wine64 lib32gcc1 libntlm0 wget winbind && \
-            useradd -d /home/container -m container && \
-            cd /home/container
+RUN         dpkg --add-architecture i386 \
+ && apt update && \
+ && apt upgrade -y \
+ && apt install -y software-properties-common iproute2 \
+ && apt install -y --install-recommends wine64 lib32gcc1 libntlm0 wget winbind \
+ && useradd -d /home/container -m container
 
 USER        container
 ENV         HOME /home/container
