@@ -10,10 +10,12 @@ LABEL       author="Mason Rowe" maintainer="mason@rowe.sh"
 ENV         DEBIAN_FRONTEND noninteractive
 
 # Install Dependencies
-RUN         apt update \
-            && apt upgrade -y \
-            && apt install -y iproute2 ca-certificates xvfb lib32gcc1 libntlm0 winbind wine64 winetricks --install-recommends \
-            && apt clean
+RUN dpkg --add-architecture i386 \
+ && apt update \
+ && apt upgrade -y \
+ && apt install -y iproute2 ca-certificates xvfb lib32gcc1 libntlm0 winbind wine64 winetricks --install-recommends \
+ && apt clean \
+ && useradd -d /home/container -m container
 
 USER        container
 ENV         USER=container HOME=/home/container WINEARCH=win64 WINEPREFIX=/home/container/.wine64
