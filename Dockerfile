@@ -7,7 +7,7 @@ FROM        alpine:3.9
 
 MAINTAINER  Pterodactyl Software, <support@pterodactyl.io>
 
-RUN         apk add --update --no-cache lua-stdlib lua musl-dev g++ libc-dev tesseract-ocr tesseract-ocr-dev \
+RUN         apk add --update --no-cache lua-stdlib lua musl-dev g++ libc-dev tesseract-ocr tesseract-ocr-dev git \
             && adduser -D -h /home/container container
 
 USER        container
