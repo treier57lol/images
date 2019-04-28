@@ -7,7 +7,8 @@ FROM        alpine:latest
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
-RUN         adduser -D -h /home/container container
+RUN         apk add --no-cache --update ca-certificates \
+            && adduser -D -h /home/container container
 
 USER        container
 ENV         USER=container HOME=/home/container
