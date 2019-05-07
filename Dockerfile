@@ -1,6 +1,6 @@
 # ----------------------------------
-# Pterodactyl Core Dockerfile
-# Environment: glibc
+# Parkervcp Dockerfile Image
+# Environment: nodejs 10
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
 FROM        node:10-alpine
