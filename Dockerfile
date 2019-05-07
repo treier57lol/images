@@ -3,7 +3,7 @@
 # Environment: glibc
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
-FROM        node:8-alpine
+FROM        node:10-alpine
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
