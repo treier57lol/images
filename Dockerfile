@@ -2,11 +2,12 @@
 # Environment: Postgres DB
 # Minimum Panel Version: 0.7.0
 # ----------------------------------
-FROM postgres:10-alpine
+FROM postgres:alpine
 
 LABEL author="Parker" maintainer="parker@pterodactyl.io"
 
-RUN adduser -D -h /home/container container
+# UID 999 is the default pterodactyl user
+RUN adduser -D -h /home/container container -u 999 
 
 USER container
 ENV HOME /home/container
