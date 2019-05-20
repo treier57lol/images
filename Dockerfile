@@ -7,7 +7,7 @@ FROM postgres:alpine
 LABEL author="Parker" maintainer="parker@pterodactyl.io"
 
 # UID 999 is the default pterodactyl user
-RUN adduser -D -h /home/container container -u 999 
+RUN adduser -D -h /home/container container
 
 USER container
 ENV HOME /home/container
