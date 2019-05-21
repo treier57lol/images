@@ -7,7 +7,7 @@ FROM        python:3-alpine
 
 LABEL       author="Michael Parker" maintainer="docker@parkervcp.com"
 
-RUN         apk add --no-cache --update \
+RUN         apk add --no-cache --update git \
             && adduser -D -h /home/container container
 
 USER        container
