@@ -1,5 +1,11 @@
 [![Logo Image](https://cdn.pterodactyl.io/logos/Banner%20Logo%20Black@2x.png)](https://pterodactyl.io)
 
+# Ubuntu
+
+This is a base Ubuntu image with some simple stuff added.
+
+Mostly created to run Minecraft Bedrock servers but should work with anything that just needs a base ubuntu install.
+
 This repository contains generic [Docker](https://docker.com) images that are used by Pterodactyl Panel to run games. With the release of `v0.7.X` of our panel, we have moved to making the install process be a completely seperate part of the process, making it much easier to maintain a smaller set of Dockerfiles.
 
 To learn more about docker or how images are made please check out this [video](https://www.youtube.com/watch?v=_dfLOzuIg2o) by [TechSquidTV](https://www.youtube.com/channel/UC7vYUkA-s5XVjS7UoyGSFbg). It is quite in depth and covers a lot of stuff.
