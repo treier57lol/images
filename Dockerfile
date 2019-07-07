@@ -2,7 +2,7 @@
 # Environment: ubuntu
 # Minimum Panel Version: 0.7.X
 # ----------------------------------
-FROM        mono:5-slim
+FROM        mono:5
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
