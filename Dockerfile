@@ -6,7 +6,8 @@ FROM        mono:5
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
-RUN         useradd -d /home/container -m container
+RUN         useradd -d /home/container -m container \
+            && apt-get install -y iproute2
 
 USER        container
 ENV         USER=container HOME=/home/container
