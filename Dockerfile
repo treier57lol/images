@@ -14,6 +14,8 @@ RUN apt update \
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
     # Java
 RUN apt -y install openjdk-8-jdk maven gradle
