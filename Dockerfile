@@ -8,7 +8,8 @@ LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 ENV         DEBIAN_FRONTEND noninteractive
 
-RUN         apt-get update -y \
+RUN         apt update -y \
+            && apt install -y netcat \
             && useradd -d /home/container -m container -s /bin/bash
 
 USER        container
