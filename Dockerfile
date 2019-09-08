@@ -8,7 +8,7 @@ LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         useradd -d /home/container -m container \
             && apt update \
-            && apt install -y iproute2 upzip
+            && apt install -y iproute2 unzip
 
 USER        container
 ENV         USER=container HOME=/home/container
