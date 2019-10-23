@@ -1,19 +1,17 @@
 #!/bin/bash
 cd /home/container
 sleep 1
-# Make internal Docker IP address available to processes.
-export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
-# Update Source Server
-if [ ! -z ${SRCDS_APPID} ]; then
-    if [ ! -z ${SRCDS_BETAID} ]; then
-        if [ ! -z ${SRCDS_BETAPASS} ]; then
-            ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} -betapassword ${SRCDS_BETAPASS} +quit
+# Update Application
+if [ ! -z ${APPID} ]; then
+    if [ ! -z ${BETAID} ]; then
+        if [ ! -z ${BETAPASS} ]; then
+            ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${BETAID} -betapassword ${BETAPASS} +quit
         else
-            ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} +quit
+            ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${BETAID} +quit
         fi
     else
-        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
+        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
     fi
 fi
 
