@@ -20,7 +20,9 @@ if [ ! -z ${SRCDS_APPID} ] && $AUTO_UPDATE; then
         fi
 fi
 
-Xvfb :0 -screen 0 1024x768x16 &
+if $FAKE_DISPLAY; then
+        Xvfb :0 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH} &
+fi
 
 echo "First Wine launch will throw some errors. Ignore them"
 
