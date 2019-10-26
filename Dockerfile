@@ -18,11 +18,13 @@ RUN		dpkg --add-architecture i386 \
 RUN 	apt install -y --install-recommends wine wine64
 
 # Install other packages
-RUN		apt install -y --no-install-recommends iproute2 cabextract wget curl lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata
+RUN		apt install -y --no-install-recommends iproute2 cabextract wget curl lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata locales
 
 # Do misc stuff
 RUN		wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
 		&& chmod +x /usr/sbin/winetricks \
+		&& echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+		&& locale-gen \
 		&& useradd -m -d /home/container container
 
 USER	container
