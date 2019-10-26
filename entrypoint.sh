@@ -30,7 +30,7 @@ mkdir $WINEPREFIX
 
 # Check if wine-gecko required and install it if so
 if [[ $WINETRICKS_RUN =~ gecko ]]; then
-echo "Installing Gecko"
+        echo "Installing Gecko"
         WINETRICKS_RUN=${WINETRICKS_RUN/gecko}
 
         if [ ! -f "$WINEPREFIX/gecko_x86.msi" ]; then
@@ -47,7 +47,7 @@ fi
 
 # Check if wine-mono required and install it if so
 if [[ $WINETRICKS_RUN =~ mono ]]; then
-echo "Installing mono"
+        echo "Installing mono"
         WINETRICKS_RUN=${WINETRICKS_RUN/mono}
 
         if [ ! -f "$WINEPREFIX/mono.msi" ]; then
