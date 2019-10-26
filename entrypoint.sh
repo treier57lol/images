@@ -1,6 +1,5 @@
 #!/bin/bash
 cd /home/container
-sleep 1
 
 # Information output
 echo "Running on Debian $(cat /etc/debian_version)"
