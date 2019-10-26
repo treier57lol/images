@@ -42,8 +42,8 @@ echo "Installing Gecko"
                 wget -q -O $WINEPREFIX/gecko_x86_64.msi http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86_64.msi
         fi
 
-        wine msiexec /i $WINEPREFIX/gecko_x86.msi /qn /quiet /norestart /log .wine/gecko_x86_install.log
-        wine msiexec /i $WINEPREFIX/gecko_x86_64.msi /qn /quiet /norestart /log .wine/gecko_x86_64_inatall.log
+        wine msiexec /i $WINEPREFIX/gecko_x86.msi /qn /quiet /norestart /log $WINEPREFIX/gecko_x86_install.log
+        wine msiexec /i $WINEPREFIX/gecko_x86_64.msi /qn /quiet /norestart /log $WINEPREFIX/gecko_x86_64_install.log
 fi
 
 # Check if wine-mono required and install it if so
@@ -55,7 +55,7 @@ echo "Installing mono"
                 wget -q -O $WINEPREFIX/gecko_x86.msi http://dl.winehq.org/wine/wine-mono/4.9.3/wine-mono-4.9.3.msi
         fi
 
-wine msiexec /i /wine/mono.msi /qn /quiet /norestart /log .wine/mono_install.log
+        wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
 fi
 
 # List and install other packages
