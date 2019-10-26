@@ -24,7 +24,7 @@ if $FAKE_DISPLAY; then
 fi
 
 # Install necessary to run packages
-echo "First Wine launch will throw some errors. Ignore them"
+echo "First launch will throw some errors. Ignore them"
 
 if [ ! -d $WINEPREFIX ]; then
         mkdir $WINEPREFIX
@@ -53,7 +53,7 @@ if [[ $WINETRICKS_RUN =~ mono ]]; then
         WINETRICKS_RUN=${WINETRICKS_RUN/mono}
 
         if [ ! -f "$WINEPREFIX/mono.msi" ]; then
-                wget -q -O $WINEPREFIX/gecko_x86.msi http://dl.winehq.org/wine/wine-mono/4.9.3/wine-mono-4.9.3.msi
+                wget -q -O $WINEPREFIX/mono.msi http://dl.winehq.org/wine/wine-mono/4.9.3/wine-mono-4.9.3.msi
         fi
 
         wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
