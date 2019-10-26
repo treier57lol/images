@@ -2,6 +2,11 @@
 cd /home/container
 sleep 1
 
+# Information output
+echo "Running on Debian $(cat /etc/debian_version)"
+echo "Current timezone: $(cat /etc/timezone)"
+wine --version
+
 # Update Application
 if [ ! -z ${SRCDS_APPID} ] && $AUTO_UPDATE; then
         if [ ! -z ${SRCDS_BETAID} ]; then
