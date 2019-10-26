@@ -26,9 +26,7 @@ fi
 # Install necessary to run packages
 echo "First launch will throw some errors. Ignore them"
 
-if [ ! -d $WINEPREFIX ]; then
-        mkdir $WINEPREFIX
-fi
+mkdir -p $WINEPREFIX
 
 # Check if wine-gecko required and install it if so
 if [[ $WINETRICKS_RUN =~ gecko ]]; then
@@ -66,7 +64,7 @@ for trick in $WINETRICKS_RUN; do
 done
 
 # Replace Startup Variables
-MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
