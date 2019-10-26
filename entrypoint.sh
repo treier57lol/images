@@ -3,15 +3,15 @@ cd /home/container
 sleep 1
 
 # Update Application
-if [ ! -z ${APPID} ]; then
-        if [ ! -z ${BETAID} ]; then
-                if [ ! -z ${BETAPASS} ]; then
-                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${BETAID} -betapassword ${BETAPASS} +quit
+if [ ! -z ${SRCDS_APPID} ] && $AUTO_UPDATE; then
+        if [ ! -z ${SRCDS_BETAID} ]; then
+                if [ ! -z ${SRCDS_BETAPASS} ]; then
+                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} -betapassword ${SRCDS_BETAPASS} +quit
                 else
-                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${BETAID} +quit
+                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} +quit
                 fi
         else
-                ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
+                ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
         fi
 fi
 
