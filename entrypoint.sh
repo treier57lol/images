@@ -19,7 +19,7 @@ if [ ! -z ${SRCDS_APPID} ] && [[ $AUTO_UPDATE == 1 ]]; then
         fi
 fi
 
-if $FAKE_DISPLAY; then
+if [[ $XVFB == 1 ]]; then
         Xvfb :0 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH} &
 fi
 
