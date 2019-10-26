@@ -26,7 +26,9 @@ fi
 # Install necessary to run packages
 echo "First Wine launch will throw some errors. Ignore them"
 
-mkdir $WINEPREFIX
+if [ ! -d $WINEPREFIX ]; then
+        mkdir $WINEPREFIX
+fi
 
 # Check if wine-gecko required and install it if so
 if [[ $WINETRICKS_RUN =~ gecko ]]; then
