@@ -1,32 +1,42 @@
 # ----------------------------------
-# Pterodactyl Core Dockerfile
-# Environment: Source Engine
-# Minimum Panel Version: 0.6.0
+# Generic Wine image w/ steamcmd support
+# Environment: Debian 19 Buster + Wine 4.0
+# Minimum Panel Version: 0.7.15
 # ----------------------------------
-FROM		debian:buster-slim
+FROM	debian:buster-slim
 
-LABEL		author="WGOS" maintainer="wgos@wgos.org"
+LABEL	author="WGOS" maintainer="wgos@wgos.org"
 
 ENV		DEBIAN_FRONTEND noninteractive
 
-# Install Dependencies
+# Add i386 arch and update
 RUN		dpkg --add-architecture i386 \
 		&& apt update \
-		&& apt upgrade -y \
-		&& apt install -y --install-recommends wine wine64 \
-		&& apt install -y --no-install-recommends wget curl lib32gcc1 ca-certificates winbind xvfb tzdata \
-		&& useradd -m -d /home/container container \
-		&& mkdir /wine \
-		&& wget -q -O /wine/gecko_x86.msi http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi \
-		&& wget -q -O /wine/gecko_x86_64.msi http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86_64.msi \
-		&& wget -q -O /wine/mono.msi http://dl.winehq.org/wine/wine-mono/4.9.3/wine-mono-4.9.3.msi \
-		&& chmod -R 0444 /wine
+		&& apt upgrade -y
 
-USER		container
-ENV		HOME /home/container
-ENV		DISPLAY :0
-WORKDIR		/home/container
+# Install wine and wine64 with recommends
+RUN 	apt install -y --install-recommends wine wine64
 
-COPY		./entrypoint.sh /entrypoint.sh
+# Install other packages
+RUN		apt install -y --no-install-recommends iproute2 cabextract wget curl lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata
+
+# Do misc stuff
+RUN		wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+		&& chmod +x /usr/sbin/winetricks \
+		&& useradd -m -d /home/container container
+
+USER	container
+
+ENV		HOME=/home/container
+ENV		WINEPREFIX=/home/container/.wine
+ENV		DISPLAY=:0
+ENV		DISPLAY_WIDTH=1024
+ENV 	DISPLAY_HEIGHT=768
+ENV		DISPLAY_DEPTH=16
+ENV		AUTO_UPDATE=true
+ENV		FAKE_DISPLAY=true
+
+WORKDIR	/home/container
+
+COPY	./entrypoint.sh /entrypoint.sh
 CMD		["/bin/bash", "/entrypoint.sh"]
-
