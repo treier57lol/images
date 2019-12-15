@@ -6,9 +6,13 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 ## just in case someone removed the defaults.
 if [ "${STEAM_USER}" == "" ]; then
+    echo -e "steam user is not set.\n"
+    echo -e "Using anonymous user.\n"
     STEAM_USER=anonymous
     STEAM_PASS=""
     STEAM_AUTH=""
+else
+    echo -e "user set to ${STEAM_USER}"
 fi
 
 ## if auto_update is not set or to 1 update
