@@ -9,7 +9,7 @@ LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 ENV         DEBIAN_FRONTEND noninteractive
 
 RUN         apt update -y \
-            && apt install -y zip unzip wget curl iproute2 libatomic1 \
+            && apt install -y zip unzip wget curl iproute2 libatomic1 libsdl-dev \
             && useradd -d /home/container -m container
 
 USER        container
