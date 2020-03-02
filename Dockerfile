@@ -2,7 +2,7 @@
 # Environment: Postgres DB
 # Minimum Panel Version: 0.7.0
 # ----------------------------------
-FROM postgres:alpine
+FROM postgres:9.6.17-alpine
 
 LABEL author="Parker" maintainer="parker@pterodactyl.io"
 
