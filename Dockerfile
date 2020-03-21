@@ -8,7 +8,7 @@ FROM        node:10-buster-slim
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         apt update \
-            && apt -y install ffmpeg iproute2 git ca-certificates dnsutils python3 \
+            && apt -y install ffmpeg iproute2 git ca-certificates dnsutils python3 build-essential \
             && useradd -m -d /home/container container
 
 USER        container
