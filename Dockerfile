@@ -8,7 +8,7 @@ FROM        node:12-buster-slim
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         apt update \
-            && apt -y install ffmpeg iproute2 git \
+            && apt -y install ffmpeg iproute2 git sqlite3 \
             && useradd -m -d /home/container container
 
 USER        container
