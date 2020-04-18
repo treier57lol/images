@@ -13,8 +13,12 @@ RUN         mkdir -p /usr/share/man/man1 \
             && apt update \
             && apt -y install git ca-certificates dnsutils iproute2 make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
             libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev \
-            libxmlsec1-dev libffi-dev liblzma-dev libgdbm-dev uuid-dev python3-openssl git openjdk-11-jre \
-            && pip install -U Red-DiscordBot
+            libxmlsec1-dev libffi-dev liblzma-dev libgdbm-dev uuid-dev python3-openssl git openjdk-11-jre 
+
+RUN         mkdir -p /home/container/.config/share/ \
+            && ln -s /home/container/.config/share/ /usr/local/share/Red-DiscordBot
+
+RUN         pip install -U Red-DiscordBot
 
 RUN         useradd -m -d /home/container container
 
