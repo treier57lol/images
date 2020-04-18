@@ -8,7 +8,7 @@ FROM        python:2.7-slim
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         apt update \
-            && apt -y install git ca-certificates dnsutils \
+            && apt -y install git ca-certificates dnsutils iproute2 \
             && useradd -m -d /home/container container
 
 USER        container
