@@ -11,8 +11,8 @@ RUN         mkdir -p /usr/share/man/man1 \
             && apt update \
             && apt -y install git ca-certificates dnsutils iproute2 wget curl xz-utils git openjdk-11-jre \
             && useradd -m -d /home/container container \
-            && mkdir /usr/local/share/Red-DiscordBot \
-            && ln -s /home/container/.config/share/ /usr/local/share/Red-DiscordBot
+            && mkdir -p /usr/local/share/Red-DiscordBot \
+            && ln -s /home/container/.config/Red-DiscordBot/ /usr/local/share/Red-DiscordBot
 
 USER        container
 ENV         USER=container HOME=/home/container 
