@@ -3,7 +3,7 @@
 # Environment: glibc
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
-FROM        node:12-buster-slim
+FROM        node:14-buster-slim
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
