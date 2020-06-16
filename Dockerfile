@@ -12,7 +12,7 @@ RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add -
  && apt update \
  && apt install -y mongodb-org=4.2.7 mongodb-org-server=4.2.7 mongodb-org-shell=4.2.7 mongodb-org-mongos=4.2.7 mongodb-org-tools=4.2.7 \
  ## install bastion reqs
- && apt install -y python build-essential \
+ && apt install -y python build-essential netcat \
  ## add container user
  && useradd -d /home/container -m container -s /bin/bash
 
