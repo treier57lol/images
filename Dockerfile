@@ -13,6 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dpkg --add-architecture i386 \
  && apt update \
  && apt upgrade -y
+ && apt install -y --no-install-recommends wget curl 
 
 # Install winehq-stable and  with recommends
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key \
@@ -21,7 +22,7 @@ RUN echo "https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sou
 RUN apt install -y --install-recommends winehq-stable
 
 # Install other packages
-RUN apt install -y --no-install-recommends iproute2 cabextract wget curl lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata locales xauth
+RUN apt install -y --no-install-recommends iproute2 cabextract lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata locales xauth
 
 # Do misc stuff
 RUN	wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
