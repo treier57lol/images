@@ -14,12 +14,13 @@ RUN dpkg --add-architecture i386 \
  && apt update \
  && apt upgrade -y
 
-RUN apt install -y --no-install-recommends gnupg2 wget curl 
+RUN apt install -y --no-install-recommends gnupg2 wget curl software-properties-common
 
 # Install winehq-stable and  with recommends
-RUN wget --no-check-certificate -nc https://dl.winehq.org/wine-builds/winehq.key
-RUN apt-key add winehq.key
-RUN echo "https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list
+RUN wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+RUN apt-add-repository https://dl.winehq.org/wine-builds/debian/
+RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10/Release.key | sudo apt-key add -    
+RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10 ./" | sudo tee /etc/apt/sources.list.d/wine-obs.list
 RUN apt install -y --install-recommends winehq-stable
 
 # Install other packages
