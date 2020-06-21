@@ -1,4 +1,4 @@
-FROM        ubuntu:20.04
+FROM        debian:buster-slim
 
 MAINTAINER  Pterodactyl Software, <support@pterodactyl.io>
 ENV         DEBIAN_FRONTEND noninteractive
