@@ -17,9 +17,9 @@ RUN dpkg --add-architecture i386 \
 RUN apt install -y --no-install-recommends wget curl 
 
 # Install winehq-stable and  with recommends
-RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key \
-RUN apt-key add winehq.key \
-RUN echo "https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list \
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
+RUN apt-key add winehq.key
+RUN echo "https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list
 RUN apt install -y --install-recommends winehq-stable
 
 # Install other packages
