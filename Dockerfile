@@ -14,7 +14,7 @@ RUN dpkg --add-architecture i386 \
  && apt update \
  && apt upgrade -y
 
-RUN apt install -y --no-install-recommends wget curl 
+RUN apt install -y --no-install-recommends gnupg2 wget curl 
 
 # Install winehq-stable and  with recommends
 RUN wget --no-check-certificate -nc https://dl.winehq.org/wine-builds/winehq.key
