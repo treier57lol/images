@@ -1,11 +1,11 @@
 # ----------------------------------
 # Generic Wine image w/ steamcmd support
-# Environment: Debian 19 Buster + Wine 4.0
+# Environment: Debian 19 Buster + Wine 5.0
 # Minimum Panel Version: 0.7.15
 # ----------------------------------
 FROM debian:buster-slim
 
-LABEL author="WGOS" maintainer="wgos@wgos.org"
+LABEL author="Terrahost" maintainer="opensource@terrahost.cloud"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -14,8 +14,11 @@ RUN dpkg --add-architecture i386 \
  && apt update \
  && apt upgrade -y
 
-# Install wine and wine64 with recommends
-RUN apt install -y --install-recommends wine wine64
+# Install winehq-stable and  with recommends
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key \
+RUN apt-key add winehq.key \
+RUN echo "https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list \
+RUN apt install -y --install-recommends winehq-stable
 
 # Install other packages
 RUN apt install -y --no-install-recommends iproute2 cabextract wget curl lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata locales xauth
