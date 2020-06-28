@@ -16,7 +16,7 @@ else
 fi
 
 ## if auto_update is not set or to 1 update
-if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then 
+if [ -z ${AUTO_UPDATE} ] || [ "${AUTO_UPDATE}" == "1" ]; then 
     # Update Source Server
     if [ ! -z ${SRCDS_APPID} ]; then
         if [ ! -z ${HLDS_GAME} ]; then
