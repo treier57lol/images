@@ -7,9 +7,9 @@ echo "Current timezone: $(cat /etc/timezone)"
 wine --version
 
 # Update Application
-if [ ! -z ${SRCDS_APPID} ] && [[ $AUTO_UPDATE == 1 ]]; then
-        if [ ! -z ${SRCDS_BETAID} ]; then
-                if [ ! -z ${SRCDS_BETAPASS} ]; then
+if [ ! -z ${APPID} ] && [[ $AUTO_UPDATE == 1 ]]; then
+        if [ ! -z ${APPID_BETAID} ]; then
+                if [ ! -z ${APPID_BETAPASS} ]; then
                         ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${APPID_BETAID} -betapassword ${SRCDS_BETAPASS} +quit
                 else
                         ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${APPID_BETAID} +quit
