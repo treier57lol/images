@@ -1,4 +1,4 @@
-FROM        debian:buster-slim
+FROM        ubuntu:20.04
 
 MAINTAINER  Terrahost <opensource@terrahost.cloud>
 ENV         DEBIAN_FRONTEND noninteractive
@@ -10,7 +10,7 @@ ENV         NSS_WRAPPER_GROUP /tmp/group
 RUN         dpkg --add-architecture i386 \
             && apt-get update \
             && apt-get upgrade -y \
-            && apt-get install -y libnss-wrapper libnss3 gettext-base tar curl gcc g++ libc6 libtbb2 libtbb2:i386 lib32gcc1 lib32stdc++6 libtinfo5 lib32z1 libtinfo5:i386 libncurses5:i386 libcurl3-gnutls:i386 \
+            && apt-get install -y libnss3 libnss-wrapper gettext-base tar curl gcc g++ libc6 libtbb2 libtbb2:i386 lib32gcc1 lib32stdc++6 lib32tinfo5 lib32z1 libtinfo5:i386 libncurses5:i386 libcurl3-gnutls:i386 \
             && useradd -m -d /home/container -s /bin/bash container \
             && touch ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP} \
             && chgrp 0 ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP} \
