@@ -10,12 +10,12 @@ wine --version
 if [ ! -z ${SRCDS_APPID} ] && [[ $AUTO_UPDATE == 1 ]]; then
         if [ ! -z ${SRCDS_BETAID} ]; then
                 if [ ! -z ${SRCDS_BETAPASS} ]; then
-                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} -betapassword ${SRCDS_BETAPASS} +quit
+                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${APPID_BETAID} -betapassword ${SRCDS_BETAPASS} +quit
                 else
-                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} -beta ${SRCDS_BETAID} +quit
+                        ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} -beta ${APPID_BETAID} +quit
                 fi
         else
-                ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${SRCDS_APPID} +quit
+                ./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update ${APPID} +quit
         fi
 fi
 
@@ -34,11 +34,11 @@ if [[ $WINETRICKS_RUN =~ gecko ]]; then
         WINETRICKS_RUN=${WINETRICKS_RUN/gecko}
 
         if [ ! -f "$WINEPREFIX/gecko_x86.msi" ]; then
-                wget -q -O $WINEPREFIX/gecko_x86.msi http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi
+                wget -q -O $WINEPREFIX/gecko_x86.msi http://dl.winehq.org/wine/wine-gecko/2.47.1/wine_gecko-2.47.1-x86.msi
         fi
 
         if [ ! -f "$WINEPREFIX/gecko_x86_64.msi" ]; then
-                wget -q -O $WINEPREFIX/gecko_x86_64.msi http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86_64.msi
+                wget -q -O $WINEPREFIX/gecko_x86_64.msi http://dl.winehq.org/wine/wine-gecko/2.47.1/wine_gecko-2.47.1-x86_64.msi
         fi
 
         wine msiexec /i $WINEPREFIX/gecko_x86.msi /qn /quiet /norestart /log $WINEPREFIX/gecko_x86_install.log
@@ -51,7 +51,7 @@ if [[ $WINETRICKS_RUN =~ mono ]]; then
         WINETRICKS_RUN=${WINETRICKS_RUN/mono}
 
         if [ ! -f "$WINEPREFIX/mono.msi" ]; then
-                wget -q -O $WINEPREFIX/mono.msi http://dl.winehq.org/wine/wine-mono/4.9.3/wine-mono-4.9.3.msi
+                wget -q -O $WINEPREFIX/mono.msi http://dl.winehq.org/wine/wine-mono/5.1.0/wine-mono-5.1.0-x86.msi
         fi
 
         wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
