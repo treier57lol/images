@@ -15,7 +15,7 @@ if [[ ! -d /home/container ]] || [[ ${WORKSHOP_UPDATE} == "1" ]]; then
 	if [[ -f /home/container/steam.txt ]]; then
 		/home/container/steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} -authkey ${AUTHKEY} +force_install_dir /home/container +app_update ${APP_ID} +host_workshop_collection ${WORKSHOP_COLLECTION} validate +runscript /home/container/steam.txt
 	else
-		/home/container/steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${APP_ID} validate +quit
+		/home/container/steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} -authkey ${AUTHKEY} +force_install_dir /home/container +app_update ${APP_ID} +host_workshop_collection ${WORKSHOP_COLLECTION} validate +quit
 	fi
 fi
 
