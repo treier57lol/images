@@ -1,6 +1,6 @@
 FROM        debian:buster-slim
 
-MAINTAINER  Terrahost, <support@pterodactyl.io>
+MAINTAINER  Terrahost, <opensource@terrahost.cloud>
 ENV         DEBIAN_FRONTEND noninteractive
 ENV         USER_NAME container
 ENV         NSS_WRAPPER_PASSWD /tmp/passwd 
