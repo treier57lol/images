@@ -2,7 +2,7 @@
 # Environment: redis
 # Minimum Panel Version: 0.7.X
 # ----------------------------------
-FROM    redis:5-buster
+FROM    redis:6-buster
 
 LABEL   author="Michael Parker" maintainer="parker@pterodactyl.io"
 
