@@ -2,7 +2,7 @@
 # Environment: ubuntu
 # Minimum Panel Version: 0.7.X
 # ----------------------------------
-FROM        mongo:4.2.7-bionic
+FROM        mongo:4-bionic
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
