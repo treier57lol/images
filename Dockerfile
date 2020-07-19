@@ -27,8 +27,6 @@ RUN apt install -y --install-recommends winehq-stable
 # Install other packages
 RUN apt install -y --no-install-recommends iproute2 cabextract lib32gcc1 libntlm0 ca-certificates winbind xvfb tzdata locales xauth python3
 
-RUN pip3 install --upgrade pip
-
 # Do misc stuff
 RUN	wget -q -O /usr/sbin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
  && chmod +x /usr/sbin/winetricks \
