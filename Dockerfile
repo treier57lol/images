@@ -9,7 +9,7 @@ LABEL author="Michael Parker" maintainer="parker@pterodactyl.io"
 ENV DEBIAN_FRONTEND noninteractive
 
 ## add container user
-RUN useradd -m -d /home/container container
+RUN useradd -m -d /home/container -s /bin/bash container
 
 ## update base packages
 RUN apt update \
