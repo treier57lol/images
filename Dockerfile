@@ -2,7 +2,7 @@
 # Environment: ubuntu
 # Minimum Panel Version: 0.7.X
 # ----------------------------------
-FROM        debian:stable-slim
+FROM        quay.io/parkervcp/pterodactyl-images:base_debian
 
 LABEL       author="Dex's Lab" maintainer="dex35803@gmail.com"
 
