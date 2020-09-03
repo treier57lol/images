@@ -8,7 +8,7 @@ FROM        python:3.8-slim
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 RUN         apt update \
-            && apt -y install git gcc mono-mcs ca-certificates dnsutils curl iproute2 ffmpeg \
+            && apt -y install git gcc ca-certificates dnsutils curl iproute2 ffmpeg \
             && useradd -m -d /home/container container
 
 USER        container
