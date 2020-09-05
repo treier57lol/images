@@ -10,11 +10,10 @@ ENV     DEBIAN_FRONTEND noninteractive
 
 RUN     apt update -y \
         && apt upgrade -y \
-        && apt install -y apt-transport-https \
-        && wget https://packages.microsoft.com/config/ubuntu/19.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+        && wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
         && dpkg -i packages-microsoft-prod.deb \
         && apt update -y \
-        && apt install -y dotnet-sdk-3.1
+        && apt install -y dotnet-sdk-3.1 aspnetcore-runtime-3.1
 
 
 USER    container
