@@ -1,4 +1,4 @@
-FROM        ubuntu:20.04
+FROM        ubuntu:18.04
 
 MAINTAINER  Terrahost <opensource@terrahost.cloud>
 ENV         DEBIAN_FRONTEND noninteractive
