@@ -13,6 +13,8 @@ RUN useradd -m -d /home/container -s /bin/bash container
 
 RUN ln -s /home/container/ /nonexistent
 
+ENV USER=container HOME=/home/container
+
 ## update base packages
 RUN apt update \
  && apt upgrade -y
@@ -24,6 +26,8 @@ RUN apt install -y gcc g++ libgcc1 lib32gcc1 gdb libc6 git wget curl tar zip unz
 ## configure locale
 RUN update-locale lang=en_US.UTF-8 \
  && dpkg-reconfigure --frontend noninteractive locales
+
+WORKDIR /home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
 CMD ["/bin/bash", "/entrypoint.sh"]
