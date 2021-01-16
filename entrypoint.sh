@@ -48,7 +48,7 @@ then
 		# Make the mods contents all lowercase
 		ModsLowercase @$i
 		# Move any .bikey's to the keys directory
-		echo -e "\nSTARTUP: Moving any mod .bikey files to the keys folder...\n"
+		echo -e "\nSTARTUP: Moving any mod .bikey files to the ~/keys/ folder...\n"
 		find ./@$i -name "*.bikey" -type f -exec cp {} ./keys \;
 	done
 	echo -e "\nSTARTUP: Download/Update Steam Workshop mods complete!\n"
