@@ -40,7 +40,9 @@ then
 	do
 		echo -e "\nSTARTUP: Downloading/Updating Steam Workshop mod ID: $i...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
-		ln ./Steam/steamapps/workshop/content/$armaGameID/$i ./@$i
+		mkdir -p ./@$i
+		rm -rf ./@$i/*
+		mv -f ./Steam/steamapps/workshop/content/$armaGameID/$i ./@$i
 		ModsLowercase @$i
 	done
 fi
