@@ -90,7 +90,13 @@ echo -e "${MODIFIED_STARTUP}\n"
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 envsubst < /passwd.template > ${NSS_WRAPPER_PASSWD}
-export LD_PRELOAD=/libnss_wrapper.so
+
+if [[ ${SERVER_BINARY} == *"x64"* ]];
+then
+	export LD_PRELOAD=/libnss_wrapper_x64.so
+else
+	export LD_PRELOAD=/libnss_wrapper.so
+fi
 
 # Run the Server
 ${MODIFIED_STARTUP}
