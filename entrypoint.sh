@@ -20,10 +20,10 @@ ModsLowercase () {
 }
 
 # Update dedicated server, if specified
-if [ ${UPDATE_SERVER} == "1" ]
+if [[ ${UPDATE_SERVER} == "1" ]];
 then
 	echo -e "\nSTARTUP: Checking for updates to game server with App ID: ${STEAMCMD_APPID}...\n"
-	if [ -f ./steam.txt ]
+	if [[ -f ./steam.txt ]];
 	then
 		echo -e "\nSTARTUP: steam.txt found in root folder! Using to run SteamCMD script...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${STEAMCMD_APPID} ${STEAMCMD_EXTRA_FLAGS} validate +runscript /home/container/steam.txt
@@ -34,7 +34,7 @@ then
 fi
 
 # Download/Update specified Steam Workshop mods, if specified
-if [ ${UPDATE_WORKSHOP} != "" ]
+if [[ -n ${UPDATE_WORKSHOP} ]];
 then
 	for i in $(echo -e ${UPDATE_WORKSHOP} | sed "s/,/ /g")
 	do
@@ -49,7 +49,7 @@ then
 fi
 
 # Make mods lowercase, if specified
-if [ ${MODS_LOWERCASE} == "1" ]
+if [[ ${MODS_LOWERCASE} == "1" ]];
 then
 	for i in $(echo -e ${MODS} | sed "s/;/ /g")
 	do
@@ -63,14 +63,14 @@ then
 fi
 
 # Run preflight, if applicable
-if [ -f ./preflight.sh ]
+if [[ -f ./preflight.sh ]];
 then
 	echo -e "\nSTARTUP: preflight.sh found in root folder! Running preflight...\n"
 	./preflight.sh
 fi
 
 # Check if specified server binary exists
-if [ ! -f ./${SERVER_BINARY} ]
+if [[ ! -f ./${SERVER_BINARY} ]];
 then
 	echo -e "\nSTARTUP_ERR: Specified server binary could not be found in files! Verify your Server Binary startup variable."
 	exit 1
@@ -90,7 +90,8 @@ export LD_PRELOAD=/libnss_wrapper.so
 # Run the Server
 ${MODIFIED_STARTUP}
 
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ];
+then
     echo -e "\nPTDL_CONTAINER_ERR: There was an error while attempting to run the start command.\n"
     exit 1
 fi
