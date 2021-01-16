@@ -51,12 +51,12 @@ fi
 # Make mods lowercase, if specified
 if [[ ${MODS_LOWERCASE} == "1" ]];
 then
-	for i in $(echo -e ${MODS} | sed "s/;/ /g")
+	for i in $(echo ${MODS} | sed "s/;/ /g")
 	do
 		ModsLowercase $i
 	done
 	
-	for i in $(echo -e ${SERVERMODS} | sed "s/;/ /g")
+	for i in $(echo ${SERVERMODS} | sed "s/;/ /g")
 	do
 		ModsLowercase $i
 	done
@@ -77,7 +77,7 @@ then
 fi
 
 # Replace Startup Variables
-MODIFIED_STARTUP=`eval echo -e $(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 echo -e "\nSTARTUP: Starting server with the following startup command:"
 echo -e "${MODIFIED_STARTUP}\n"
 
