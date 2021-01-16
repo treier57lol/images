@@ -8,7 +8,7 @@ sleep 1
 
 # Define make mods lowercase function
 ModsLowercase () {
-	echo -e "\nSTARTUP: Making mod ID $1 files/folders lowercase...\n"
+	echo -e "\nSTARTUP: Making mod $1 files/folders lowercase..."
 	for SRC in `find ./$1 -depth`
 	do
 		DST=`dirname "${SRC}"`/`basename "${SRC}" | tr '[A-Z]' '[a-z]'`
@@ -40,8 +40,7 @@ then
 	do
 		echo -e "\nSTARTUP: Downloading/Updating Steam Workshop mod ID: $i...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
-		mkdir -p ./@$i
-		mv ./steamapps/workshop/content/$armaGameID/$i ./@$i
+		ln ./Steam/steamapps/workshop/content/$armaGameID/$i ./@$i
 		ModsLowercase @$i
 	done
 fi
