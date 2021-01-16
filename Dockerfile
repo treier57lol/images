@@ -1,4 +1,4 @@
-FROM        debian:buster-slim
+FROM        ubuntu:20.04
 
 LABEL       author="Pterodactyl Software" maintainer="support@pterodactyl.io"
 ENV         DEBIAN_FRONTEND noninteractive
