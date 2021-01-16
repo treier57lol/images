@@ -42,7 +42,8 @@ then
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
 		mkdir -p ./@$i
 		rm -rf ./@$i/*
-		mv -f ./Steam/steamapps/workshop/content/$armaGameID/$i ./@$i
+		mv -f ./Steam/steamapps/workshop/content/$armaGameID/$i/* ./@$i
+		rm -d ./Steam/steamapps/workshop/content/$armaGameID/$i
 		ModsLowercase @$i
 	done
 fi
@@ -66,6 +67,13 @@ if [ -f ./preflight.sh ]
 then
 	echo -e "\nSTARTUP: preflight.sh found in root folder! Running preflight...\n"
 	./preflight.sh
+fi
+
+# Check if specified server binary exists
+if [ ! -f ./${SERVER_BINARY} ]
+then
+	echo -e "\nSTARTUP_ERR: Specified server binary could not be found in files! Verify your Server Binary startup variable."
+	exit 1
 fi
 
 # Replace Startup Variables
