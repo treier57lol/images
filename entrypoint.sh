@@ -25,7 +25,7 @@ then
 	echo -e "\nSTARTUP: Checking for updates to game server with App ID: ${STEAMCMD_APPID}...\n"
 	if [[ -f ./steam.txt ]];
 	then
-		echo -e "\nSTARTUP: steam.txt found in root folder! Using to run SteamCMD script...\n"
+		echo -e "\nSTARTUP: steam.txt found in root folder. Using to run SteamCMD script...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${STEAMCMD_APPID} ${STEAMCMD_EXTRA_FLAGS} validate +runscript /home/container/steam.txt
 	else
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${STEAMCMD_APPID} ${STEAMCMD_EXTRA_FLAGS} validate +quit
@@ -40,12 +40,17 @@ then
 	do
 		echo -e "\nSTARTUP: Downloading/Updating Steam Workshop mod ID: $i...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
+		# Move the downloaded mod to the root directory, and replace existing mod if needed
 		mkdir -p ./@$i
 		rm -rf ./@$i/*
 		mv -f ./Steam/steamapps/workshop/content/$armaGameID/$i/* ./@$i
 		rm -d ./Steam/steamapps/workshop/content/$armaGameID/$i
+		# Make the mods contents all lowercase
 		ModsLowercase @$i
+		# Move any .bikey's to the keys directory
+		find ./@$i -name "*.bikey" -type f -exec cp {} ./keys \;
 	done
+	echo -e "\nSTARTUP: Download/Update Steam Workshop mods complete!\n"
 fi
 
 # Make mods lowercase, if specified
@@ -65,7 +70,7 @@ fi
 # Run preflight, if applicable
 if [[ -f ./preflight.sh ]];
 then
-	echo -e "\nSTARTUP: preflight.sh found in root folder! Running preflight...\n"
+	echo -e "\nSTARTUP: preflight.sh found in root folder. Running preflight...\n"
 	./preflight.sh
 fi
 
