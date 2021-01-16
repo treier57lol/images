@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# SteamCMD ID for the Arma 3 GAME (not server). Only used for Workshop mod downloads.
+armaGameID=107410
+
 cd /home/container
 sleep 1
 
@@ -15,7 +19,7 @@ ModsLowercase () {
 	done
 }
 
-# Update Variable script.
+# Update dedicated server, if specified
 if [ ${UPDATE_SERVER} == "1" ]
 then
 	echo "STARTUP: Checking for updates to game server with App ID: ${STEAMCMD_APPID}..."
@@ -29,19 +33,19 @@ then
 	echo "STARTUP: Game server update check complete!"
 fi
 
-# Allow for Steam Workshop downloads
+# Download/Update specified Steam Workshop mods, if specified
 if [ ${UPDATE_WORKSHOP} != "" ]
 then
 	for i in $(echo ${UPDATE_WORKSHOP} | sed "s/,/ /g")
 	do
 		echo "STARTUP: Downloading/Updating Steam Workshop mod ID: $i..."
-		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +workshop_download_item 107410 $i validate +quit
-		mv $i @$i
+		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
+		ln -s ./steamapps/workshop/content/$armaGameID/$i ./@$i
 		ModsLowercase @$i
 	done
 fi
 
-# Make mods lowercase
+# Make mods lowercase, if specified
 if [ ${MODS_LOWERCASE} == "1" ]
 then
 	for i in $(echo ${MODS} | sed "s/;/ /g")
@@ -53,6 +57,7 @@ then
 	do
 fi
 
+# Run preflight, if applicable
 if [ -f ./preflight.sh ]
 then
 	echo "STARTUP: preflight.sh found in root folder! Running preflight..."
