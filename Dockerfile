@@ -1,6 +1,6 @@
 FROM        debian:buster-slim
 
-LABEL       maintainer="opensource@terrahost.cloud"
+LABEL       author="Pterodactyl Software" maintainer="support@pterodactyl.io"
 ENV         DEBIAN_FRONTEND noninteractive
 ENV         USER_NAME container
 ENV         NSS_WRAPPER_PASSWD /tmp/passwd 
@@ -10,12 +10,12 @@ ENV         NSS_WRAPPER_GROUP /tmp/group
 RUN         dpkg --add-architecture i386 \
             && apt-get update \
             && apt-get upgrade -y \
-            && apt-get install -y libnss-wrapper gettext-base tar curl gcc g++ libc6 libtbb2 libtbb2:i386 lib32gcc1 lib32stdc++6 lib32z1 libtinfo5:i386 libncurses5:i386 libcurl3-gnutls:i386 \
+            && apt-get install -y libnss-wrapper gettext-base tar curl gcc g++ libc6 libtbb2 libsdl2-2.0-0:i386 libtbb2:i386 lib32gcc1 lib32stdc++6 lib32z1 libtinfo5:i386 libncurses5:i386 libcurl3-gnutls:i386 \
             && useradd -m -d /home/container -s /bin/bash container \
             && touch ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP} \
             && chgrp 0 ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP} \
-            && chmod g+rw ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP}	 		
-			
+            && chmod g+rw ${NSS_WRAPPER_PASSWD} ${NSS_WRAPPER_GROUP}
+
 ADD         passwd.template /passwd.template
 
 USER        container
