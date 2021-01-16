@@ -8,7 +8,7 @@ sleep 1
 
 # Define make mods lowercase function
 ModsLowercase () {
-	echo "STARTUP: Making mod ID $1 files/folders lowercase..."
+	echo -e "\nSTARTUP: Making mod ID $1 files/folders lowercase...\n"
 	for SRC in `find ./$1 -depth`
 	do
 		DST=`dirname "${SRC}"`/`basename "${SRC}" | tr '[A-Z]' '[a-z]'`
@@ -22,25 +22,25 @@ ModsLowercase () {
 # Update dedicated server, if specified
 if [ ${UPDATE_SERVER} == "1" ]
 then
-	echo "STARTUP: Checking for updates to game server with App ID: ${STEAMCMD_APPID}..."
+	echo -e "\nSTARTUP: Checking for updates to game server with App ID: ${STEAMCMD_APPID}...\n"
 	if [ -f ./steam.txt ]
 	then
-		echo "STARTUP: steam.txt found in root folder! Using to run SteamCMD script..."
+		echo -e "\nSTARTUP: steam.txt found in root folder! Using to run SteamCMD script...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${STEAMCMD_APPID} ${STEAMCMD_EXTRA_FLAGS} validate +runscript /home/container/steam.txt
 	else
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +force_install_dir /home/container +app_update ${STEAMCMD_APPID} ${STEAMCMD_EXTRA_FLAGS} validate +quit
 	fi
-	echo "STARTUP: Game server update check complete!"
+	echo -e "\nSTARTUP: Game server update check complete!\n"
 fi
 
 # Download/Update specified Steam Workshop mods, if specified
 if [ ${UPDATE_WORKSHOP} != "" ]
 then
-	for i in $(echo ${UPDATE_WORKSHOP} | sed "s/,/ /g")
+	for i in $(echo -e ${UPDATE_WORKSHOP} | sed "s/,/ /g")
 	do
-		echo "STARTUP: Downloading/Updating Steam Workshop mod ID: $i..."
+		echo -e "\nSTARTUP: Downloading/Updating Steam Workshop mod ID: $i...\n"
 		./steamcmd/steamcmd.sh +login ${STEAM_USER} ${STEAM_PASS} +workshop_download_item $armaGameID $i validate +quit
-		ln -s ./steamapps/workshop/content/$armaGameID/$i ./@$i
+		mv ./steamapps/workshop/content/$armaGameID/$i ./@$i
 		ModsLowercase @$i
 	done
 fi
@@ -48,26 +48,28 @@ fi
 # Make mods lowercase, if specified
 if [ ${MODS_LOWERCASE} == "1" ]
 then
-	for i in $(echo ${MODS} | sed "s/;/ /g")
-		ModsLowercase $i
+	for i in $(echo -e ${MODS} | sed "s/;/ /g")
 	do
+		ModsLowercase $i
+	done
 	
-	for i in $(echo ${SERVERMODS} | sed "s/;/ /g")
-		ModsLowercase $i
+	for i in $(echo -e ${SERVERMODS} | sed "s/;/ /g")
 	do
+		ModsLowercase $i
+	done
 fi
 
 # Run preflight, if applicable
 if [ -f ./preflight.sh ]
 then
-	echo "STARTUP: preflight.sh found in root folder! Running preflight..."
+	echo -e "\nSTARTUP: preflight.sh found in root folder! Running preflight...\n"
 	./preflight.sh
 fi
 
 # Replace Startup Variables
-MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
-echo "STARTUP: Starting server with the following startup command:"
-echo "${MODIFIED_STARTUP}"
+MODIFIED_STARTUP=`eval echo -e $(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+echo -e "\nSTARTUP: Starting server with the following startup command:"
+echo -e "${MODIFIED_STARTUP}\n"
 
 # $NSS_WRAPPER_PASSWD and $NSS_WRAPPER_GROUP have been set by the Dockerfile
 export USER_ID=$(id -u)
@@ -79,6 +81,6 @@ export LD_PRELOAD=/libnss_wrapper.so
 ${MODIFIED_STARTUP}
 
 if [ $? -ne 0 ]; then
-    echo "PTDL_CONTAINER_ERR: There was an error while attempting to run the start command."
+    echo -e "\nPTDL_CONTAINER_ERR: There was an error while attempting to run the start command.\n"
     exit 1
 fi
