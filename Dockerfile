@@ -1,4 +1,4 @@
-FROM        ubuntu:20.04
+FROM        debian:buster-slim
 
 LABEL       author="Pterodactyl Software" maintainer="support@pterodactyl.io"
 ENV         DEBIAN_FRONTEND noninteractive
@@ -24,5 +24,6 @@ ENV         HOME /home/container
 WORKDIR     /home/container
 
 COPY        ./libnss_wrapper.so /libnss_wrapper.so
+COPY        ./libnss_wrapper_x64.so /libnss_wrapper_x64.so
 COPY        ./entrypoint.sh /entrypoint.sh
 CMD         ["/bin/bash", "/entrypoint.sh"]
