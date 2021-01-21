@@ -68,18 +68,26 @@ then
 	done
 fi
 
-# Run preflight, if applicable
-if [[ -f ./preflight.sh ]];
-then
-	echo -e "\nSTARTUP: preflight.sh found in root folder. Running preflight...\n"
-	./preflight.sh
-fi
-
 # Check if specified server binary exists
 if [[ ! -f ./${SERVER_BINARY} ]];
 then
 	echo -e "\nSTARTUP_ERR: Specified server binary could not be found in files! Verify your Server Binary startup variable."
 	exit 1
+fi
+
+# Check if basic.cfg exists, and download if not (Arma really doesn't like it missing for some reason)
+if [[ ! -f ./${BASIC} ]];
+then
+	echo -e "\nSTARTUP: Specified Basic Network Configuration file \"${BASIC}\" is missing!"
+	echo -e "\tDownloading default file for use instead...\n"
+	curl -sSL https://raw.githubusercontent.com/parkervcp/eggs/master/steamcmd_servers/arma/arma3/egg-arma3-config/basic.cfg -o ./${BASIC}
+fi
+
+# Run preflight, if applicable
+if [[ -f ./preflight.sh ]];
+then
+	echo -e "\nSTARTUP: preflight.sh found in root folder. Running preflight...\n"
+	./preflight.sh
 fi
 
 # Replace Startup Variables
