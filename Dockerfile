@@ -2,9 +2,9 @@
 # Environment: ubuntu
 # Minimum Panel Version: 0.7.X
 # ----------------------------------
-FROM    quay.io/parkervcp/pterodactyl-images:base_debian
+FROM    node:14-buster-slim
 
-LABEL   author="Dex's Lab" maintainer="dex35803@gmail.com"
+LABEL   author="paz" maintainer="paz@paz.yt"
 
 ENV     DEBIAN_FRONTEND noninteractive
 
@@ -14,7 +14,8 @@ RUN     apt update -y \
         && dpkg -i packages-microsoft-prod.deb \
         && apt update -y \
         && apt install -y dotnet-sdk-5.0 aspnetcore-runtime-5.0 libgdiplus
-
+        && apt -y install ffmpeg iproute2 git sqlite3 python3 ca-certificates dnsutils build-essential \
+            && useradd -m -d /home/container container
 
 USER    container
 ENV     USER=container HOME=/home/container
