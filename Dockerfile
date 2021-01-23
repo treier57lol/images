@@ -19,7 +19,8 @@ RUN     wget https://packages.microsoft.com/config/debian/10/packages-microsoft-
         && dpkg -i packages-microsoft-prod.deb \
         && apt update -y \
         && apt install -y dotnet-sdk-5.0 aspnetcore-runtime-5.0 libgdiplus \
-        && apt -y install ffmpeg iproute2 git sqlite3 python3 ca-certificates dnsutils build-essential
+        && apt install -y ffmpeg iproute2 git sqlite3 python3 ca-certificates dnsutils build-essential \
+        && apt install -y coreutils jq pcregrep
 
 RUN     update-locale lang=en_US.UTF-8 \
         && dpkg-reconfigure --frontend noninteractive locales
