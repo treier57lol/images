@@ -1,14 +1,23 @@
 #!/bin/bash
 
+# File: Pterodactyl Arma 3 Image - entrypoint.sh
+# Author: David Wolfe (Red-Thirten)
+# Date: 1-25-21
+
 # SteamCMD ID for the Arma 3 GAME (not server). Only used for Workshop mod downloads.
 armaGameID=107410
+# Color Codes
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
 cd /home/container
 sleep 1
 
 # Define make mods lowercase function
 ModsLowercase () {
-	echo -e "\nSTARTUP: Making mod $1 files/folders lowercase..."
+	echo -e "\n${GREEN}STARTUP: Making mod $1 files/folders lowercase...${NC}"
 	for SRC in `find ./$1 -depth`
 	do
 		DST=`dirname "${SRC}"`/`basename "${SRC}" | tr '[A-Z]' '[a-z]'`
@@ -76,7 +85,7 @@ then
 fi
 
 # Check if basic.cfg exists, and download if not (Arma really doesn't like it missing for some reason)
-if [[ ! -f ./${BASIC} ]];
+if [[ -n ${BASIC} ]] && [[ ! -f ./${BASIC} ]];
 then
 	echo -e "\nSTARTUP: Specified Basic Network Configuration file \"${BASIC}\" is missing!"
 	echo -e "\tDownloading default file for use instead...\n"
