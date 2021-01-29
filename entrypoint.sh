@@ -78,8 +78,8 @@ then
 	done
 fi
 
-# Check if specified server binary exists
-if [[ ! -f ./${SERVER_BINARY} ]];
+# Check if specified server binary exists. If null (legacy egg is being used), skips check.
+if [[ -n ${SERVER_BINARY} ]] && [[ ! -f ./${SERVER_BINARY} ]];
 then
 	echo -e "\n${RED}STARTUP_ERR: Specified server binary could not be found in files! Verify your Server Binary startup variable.${NC}"
 	exit 1
