@@ -2,7 +2,7 @@
 
 # File: Pterodactyl Arma 3 Image - entrypoint.sh
 # Author: David Wolfe (Red-Thirten)
-# Date: 1-25-21
+# Date: 1-30-21
 
 # SteamCMD ID for the Arma 3 GAME (not server). Only used for Workshop mod downloads.
 armaGameID=107410
@@ -28,6 +28,16 @@ ModsLowercase () {
 		fi
 	done
 }
+
+# Check for old eggs
+if [[ -z ${SERVER_BINARY} ]] || [[ -n ${MODS} ]];
+then
+	echo -e "\n${RED}STARTUP_ERR: Please contact your administrator/host for support, and give them the following message:${NC}\n"
+	echo -e "\t${CYAN}Your Arma 3 Egg is outdated and no longer supported.${NC}"
+	echo -e "\t${CYAN}Please download the latest version at the following link, and install it in your panel:${NC}"
+	echo -e "\t${CYAN}https://github.com/parkervcp/eggs/tree/master/steamcmd_servers/arma${NC}\n"
+	exit 1
+fi
 
 # Update dedicated server, if specified
 if [[ ${UPDATE_SERVER} == "1" ]];
@@ -67,7 +77,7 @@ fi
 # Make mods lowercase, if specified
 if [[ ${MODS_LOWERCASE} == "1" ]];
 then
-	for i in $(echo ${MODS} | sed "s/;/ /g")
+	for i in $(echo ${MODIFICATIONS} | sed "s/;/ /g")
 	do
 		ModsLowercase $i
 	done
@@ -79,9 +89,9 @@ then
 fi
 
 # Check if specified server binary exists. If null (legacy egg is being used), skips check.
-if [[ -n ${SERVER_BINARY} ]] && [[ ! -f ./${SERVER_BINARY} ]];
+if [[ ! -f ./${SERVER_BINARY} ]];
 then
-	echo -e "\n${RED}STARTUP_ERR: Specified server binary could not be found in files! Verify your Server Binary startup variable.${NC}"
+	echo -e "\n${RED}STARTUP_ERR: Specified server binary could not be found in files!${NC}"
 	exit 1
 fi
 
@@ -92,18 +102,6 @@ then
 	echo -e "\t${YELLOW}Downloading default file for use instead...${NC}"
 	curl -sSL https://raw.githubusercontent.com/parkervcp/eggs/master/steamcmd_servers/arma/arma3/egg-arma3-config/basic.cfg -o ./${BASIC}
 fi
-
-# Run preflight, if applicable
-if [[ -f ./preflight.sh ]];
-then
-	echo -e "\n${GREEN}STARTUP:${NC} preflight.sh found in root folder. Running preflight...\n"
-	./preflight.sh
-fi
-
-# Replace Startup Variables
-MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
-echo -e "\n${GREEN}STARTUP:${NC} Starting server with the following startup command:"
-echo -e "${CYAN}${MODIFIED_STARTUP}${NC}\n"
 
 # $NSS_WRAPPER_PASSWD and $NSS_WRAPPER_GROUP have been set by the Dockerfile
 export USER_ID=$(id -u)
@@ -117,7 +115,23 @@ else
 	export LD_PRELOAD=/libnss_wrapper.so
 fi
 
-# Run the Server
+# Replace Startup Variables
+MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+
+# Start Headless Clients if applicable
+if [[ ${HC_NUM} > 0 ]];
+then
+	echo -e "\n${GREEN}STARTUP:${NC} Starting ${CYAN}${HC_NUM}${NC} Headless Client(s)."
+	for i in $(seq ${HC_NUM})
+	do
+		./${SERVER_BINARY} -client -connect=127.0.0.1 -port=${SERVER_PORT} -password="${HC_PASSWORD}" -profiles=./serverprofile -bepath=./battleye -mod="${MODIFICATIONS}" ${STARTUP_PARAMS} &
+		echo -e "${GREEN}STARTUP:${CYAN} Headless Client $i${NC} launched."
+	done
+fi
+
+# Start the Server
+echo -e "\n${GREEN}STARTUP:${NC} Starting server with the following startup command:"
+echo -e "${CYAN}${MODIFIED_STARTUP}${NC}\n"
 ${MODIFIED_STARTUP}
 
 if [ $? -ne 0 ];
