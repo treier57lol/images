@@ -3,7 +3,7 @@
 # Environment: nodejs 10
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
-FROM        node:12-buster
+FROM        node:14-buster
 
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
     ## install mongo
