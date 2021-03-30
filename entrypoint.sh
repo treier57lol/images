@@ -5,8 +5,8 @@ cd /home/container
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Replace Startup Variables
-MODIFIED_STARTUP=$(echo -e $(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g'))
-echo -e ":/home/container$ ${MODIFIED_STARTUP}"
+MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
+eval "echo \"${MODIFIED_STARTUP}\""
 
 # Run the Server
-exec ${MODIFIED_STARTUP}
+exec $(eval "echo \"${MODIFIED_STARTUP}\"")
