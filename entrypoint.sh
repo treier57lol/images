@@ -9,4 +9,4 @@ MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 eval "echo \"${MODIFIED_STARTUP}\""
 
 # Run the Server
-exec $(eval "echo \"${MODIFIED_STARTUP}\"")
+exec /bin/bash -c $(eval "echo \"${MODIFIED_STARTUP}\"") 
