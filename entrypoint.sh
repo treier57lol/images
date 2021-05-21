@@ -5,7 +5,9 @@ cd /home/container
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Update Rust Server
-./steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update 258550 +quit
+if [ -z ${AUTO_UPDATE} ] || [ "${AUTO_UPDATE}" == "1" ]; then 
+    ./steam/steamcmd.sh +login anonymous +force_install_dir /home/container +app_update 258550 +quit
+fi
 
 # Replace Startup Variables
 MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
