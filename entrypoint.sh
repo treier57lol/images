@@ -19,7 +19,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 ## === ENVIRONMENT VARS ===
-# STARTUP, STARTUP_PARAMS, STEAM_USER, STEAM_PASS, SERVER_BINARY, MOD_FILE, MODIFICATIONS, SERVERMODS, UPDATE_SERVER, CLEAR_CACHE, VALIDATE_SERVER, MODS_LOWERCASE, STEAMCMD_EXTRA_FLAGS, CDLC, STEAMCMD_APPID, HC_NUM, HC_PASSWORD, HC_HIDE, STEAMCMD_ATTEMPTS, BASIC_URL
+# STARTUP, STARTUP_PARAMS, STEAM_USER, STEAM_PASS, SERVER_BINARY, MOD_FILE, MODIFICATIONS, SERVERMODS, UPDATE_SERVER, CLEAR_CACHE, VALIDATE_SERVER, MODS_LOWERCASE, STEAMCMD_EXTRA_FLAGS, CDLC, STEAMCMD_APPID, HC_NUM, SERVER_PASSWORD, HC_HIDE, STEAMCMD_ATTEMPTS, BASIC_URL
 
 ## === GLOBAL VARS ===
 # validateServer, extraFlags, updateAttempt, modifiedStartup, allMods, CLIENT_MODS
@@ -302,9 +302,9 @@ if [[ ${HC_NUM} > 0 ]]; then
     do
         if [[ ${HC_HIDE} == "1" ]];
         then
-            ./${SERVER_BINARY} -client -connect=127.0.0.1 -port=${SERVER_PORT} -password="${HC_PASSWORD}" -profiles=./serverprofile -bepath=./battleye -mod="${CLIENT_MODS}" ${STARTUP_PARAMS} > /dev/null 2>&1 &
+            ./${SERVER_BINARY} -client -connect=127.0.0.1 -port=${SERVER_PORT} -password="${SERVER_PASSWORD}" -profiles=./serverprofile -bepath=./battleye -mod="${CLIENT_MODS}" ${STARTUP_PARAMS} > /dev/null 2>&1 &
         else
-            ./${SERVER_BINARY} -client -connect=127.0.0.1 -port=${SERVER_PORT} -password="${HC_PASSWORD}" -profiles=./serverprofile -bepath=./battleye -mod="${CLIENT_MODS}" ${STARTUP_PARAMS} &
+            ./${SERVER_BINARY} -client -connect=127.0.0.1 -port=${SERVER_PORT} -password="${SERVER_PASSWORD}" -profiles=./serverprofile -bepath=./battleye -mod="${CLIENT_MODS}" ${STARTUP_PARAMS} &
         fi
         echo -e "${GREEN}[STARTUP]:${CYAN} Headless Client $i${NC} launched."
     done
