@@ -53,44 +53,46 @@ function RunSteamCMD { #[Input: int server=0 mod=1; int id]
         # Error checking for SteamCMD
         steamcmdExitCode=${PIPESTATUS[0]}
         if [[ -n "$(grep -i "error\|failed" "${STEAMCMD_LOG}")" ]]; then # Catch errors
-            # Soft errors
-            if [[ -n "$(grep -i "Timeout downloading item" "${STEAMCMD_LOG}")" ]]; then # Mod download timeout
-                echo -e "\n${YELLOW}[UPDATE]: ${NC}Timeout downloading Steam Workshop mod: \"${CYAN}${modName}${NC}\" (${CYAN}${2}${NC})"
-                echo -e "\t(This is expected for particularly large mods)"
-            elif [[ -n "$(grep -i "0x402\|0x6\|0x602" "${STEAMCMD_LOG}")" ]]; then # Connection issue with Steam
-                echo -e "\n${YELLOW}[UPDATE]: ${NC}Connection issue with Steam servers."
-                echo -e "\t(Steam servers may currently be down, or a connection cannot be made reliably)"
-            # Hard errors
-            elif [[ -n "$(grep -i "Password check for AppId" "${STEAMCMD_LOG}")" ]]; then # Incorrect beta branch password
-                echo -e "\n${RED}[UPDATE]: ${YELLOW}Incorrect password given for beta branch. ${CYAN}Skipping download...${NC}"
-                echo -e "\t(Check your \"[ADVANCED] EXTRA FLAGS FOR STEAMCMD\" startup parameter)"
-                break
-            # Fatal errors
-            elif [[ -n "$(grep -i "Invalid Password\|two-factor\|No subscription" "${STEAMCMD_LOG}")" ]]; then # Wrong username/password, Steam Guard is turned on, or host is using anonymous account
-                echo -e "\n${RED}[UPDATE]: Cannot login to Steam - Improperly configured account and/or credentials"
-                echo -e "\t${YELLOW}Please contact your administrator/host and give them the following message:${NC}"
-                echo -e "\t${CYAN}Your Egg, or your client's server, is not configured with valid Steam credentials.${NC}"
-                echo -e "\t${CYAN}Either the username/password is wrong, or Steam Guard is not properly configured\n\taccording to this egg's documentation/README.${NC}"
-                exit 1
-            elif [[ -n "$(grep -i "Download item" "${STEAMCMD_LOG}")" ]]; then # Steam account does not own base game for mod downloads, or unknown
-                echo -e "\n${RED}[UPDATE]: Cannot download mod - Download failed"
-                echo -e "\t${YELLOW}While unknown, this error is likely due to your host's Steam account not owning the base game.${NC}"
-                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
-                exit 1
-            elif [[ -n "$(grep -i "0x202\|0x212" "${STEAMCMD_LOG}")" ]]; then # Not enough disk space
-                echo -e "\n${RED}[UPDATE]: Unable to complete download - Not enough storage"
-                echo -e "\t${YELLOW}You have run out of your allotted disk space.${NC}"
-                echo -e "\t${YELLOW}Please contact your administrator/host for potential storage upgrades.${NC}"
-                exit 1
-            elif [[ -n "$(grep -i "0x606" "${STEAMCMD_LOG}")" ]]; then # Disk write failure
-                echo -e "\n${RED}[UPDATE]: Unable to complete download - Disk write failure"
-                echo -e "\t${YELLOW}This is normally caused by directory permissions issues,\n\tbut could be a more serious hardware issue.${NC}"
-                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
-                exit 1
-            else # Unknown caught error
-                echo -e "\n${RED}[UPDATE]: ${YELLOW}An unknown error has occurred with SteamCMD. ${CYAN}Skipping download...${NC}"
-                echo -e "\t(Please contact your administrator/host if this issue persists)"
-                break
+            if [[ -z "$(grep -i "setlocale" "${STEAMCMD_LOG}")" ]]; then # Ignore setlocale warning
+                # Soft errors
+                if [[ -n "$(grep -i "Timeout downloading item" "${STEAMCMD_LOG}")" ]]; then # Mod download timeout
+                    echo -e "\n${YELLOW}[UPDATE]: ${NC}Timeout downloading Steam Workshop mod: \"${CYAN}${modName}${NC}\" (${CYAN}${2}${NC})"
+                    echo -e "\t(This is expected for particularly large mods)"
+                elif [[ -n "$(grep -i "0x402\|0x6\|0x602" "${STEAMCMD_LOG}")" ]]; then # Connection issue with Steam
+                    echo -e "\n${YELLOW}[UPDATE]: ${NC}Connection issue with Steam servers."
+                    echo -e "\t(Steam servers may currently be down, or a connection cannot be made reliably)"
+                # Hard errors
+                elif [[ -n "$(grep -i "Password check for AppId" "${STEAMCMD_LOG}")" ]]; then # Incorrect beta branch password
+                    echo -e "\n${RED}[UPDATE]: ${YELLOW}Incorrect password given for beta branch. ${CYAN}Skipping download...${NC}"
+                    echo -e "\t(Check your \"[ADVANCED] EXTRA FLAGS FOR STEAMCMD\" startup parameter)"
+                    break
+                # Fatal errors
+                elif [[ -n "$(grep -i "Invalid Password\|two-factor\|No subscription" "${STEAMCMD_LOG}")" ]]; then # Wrong username/password, Steam Guard is turned on, or host is using anonymous account
+                    echo -e "\n${RED}[UPDATE]: Cannot login to Steam - Improperly configured account and/or credentials"
+                    echo -e "\t${YELLOW}Please contact your administrator/host and give them the following message:${NC}"
+                    echo -e "\t${CYAN}Your Egg, or your client's server, is not configured with valid Steam credentials.${NC}"
+                    echo -e "\t${CYAN}Either the username/password is wrong, or Steam Guard is not properly configured\n\taccording to this egg's documentation/README.${NC}"
+                    exit 1
+                elif [[ -n "$(grep -i "Download item" "${STEAMCMD_LOG}")" ]]; then # Steam account does not own base game for mod downloads, or unknown
+                    echo -e "\n${RED}[UPDATE]: Cannot download mod - Download failed"
+                    echo -e "\t${YELLOW}While unknown, this error is likely due to your host's Steam account not owning the base game.${NC}"
+                    echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
+                    exit 1
+                elif [[ -n "$(grep -i "0x202\|0x212" "${STEAMCMD_LOG}")" ]]; then # Not enough disk space
+                    echo -e "\n${RED}[UPDATE]: Unable to complete download - Not enough storage"
+                    echo -e "\t${YELLOW}You have run out of your allotted disk space.${NC}"
+                    echo -e "\t${YELLOW}Please contact your administrator/host for potential storage upgrades.${NC}"
+                    exit 1
+                elif [[ -n "$(grep -i "0x606" "${STEAMCMD_LOG}")" ]]; then # Disk write failure
+                    echo -e "\n${RED}[UPDATE]: Unable to complete download - Disk write failure"
+                    echo -e "\t${YELLOW}This is normally caused by directory permissions issues,\n\tbut could be a more serious hardware issue.${NC}"
+                    echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
+                    exit 1
+                else # Unknown caught error
+                    echo -e "\n${RED}[UPDATE]: ${YELLOW}An unknown error has occurred with SteamCMD. ${CYAN}Skipping download...${NC}"
+                    echo -e "\t(Please contact your administrator/host if this issue persists)"
+                    break
+                fi
             fi
         elif [[ $steamcmdExitCode != 0 ]]; then # Unknown fatal error
             echo -e "\n${RED}[UPDATE]: SteamCMD has crashed for an unknown reason!${NC} (Exit code: ${CYAN}${steamcmdExitCode}${NC})"
@@ -213,7 +215,7 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
                 # Get mod's latest update in epoch time from its Steam Workshop changelog page
                 latestUpdate=$(curl -sL https://steamcommunity.com/sharedfiles/filedetails/changelog/$modID | grep '<p id=' | head -1 | cut -d'"' -f2)
                 # If the update time is valid and newer than the local directory's creation date, or the mod hasn't been downloaded yet, download the mod
-                if [[ ! -d @$modID ]] || [[ -n $latestUpdate ]] && [[ $latestUpdate =~ ^[0-9]+$ ]] && (( $latestUpdate > $(find @$modID | head -1 | xargs stat -c%Z) )); then
+                if [[ ! -d @$modID ]] || [[ ( -n $latestUpdate ) && ( $latestUpdate =~ ^[0-9]+$ ) && ( $latestUpdate > $(find @$modID | head -1 | xargs stat -c%Z) ) ]]; then
                     # Get the mod's name from the Workshop page as well
                     modName=$(curl -sL https://steamcommunity.com/sharedfiles/filedetails/changelog/$modID | grep 'workshopItemTitle' | cut -d'>' -f2 | cut -d'<' -f1)
                     if [[ -z $modName ]]; then # Set default name if unavailable
