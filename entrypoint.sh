@@ -70,22 +70,22 @@ function RunSteamCMD { #[Input: int server=0 mod=1; int id]
                 echo -e "\n${RED}[UPDATE]: Cannot login to Steam - Improperly configured account and/or credentials"
                 echo -e "\t${YELLOW}Please contact your administrator/host and give them the following message:${NC}"
                 echo -e "\t${CYAN}Your Egg, or your client's server, is not configured with valid Steam credentials.${NC}"
-                echo -e "\t${CYAN}Either the username/password is wrong, or Steam Guard is not properly configured\n\taccording to this egg's documentation/README.${NC}"
+                echo -e "\t${CYAN}Either the username/password is wrong, or Steam Guard is not properly configured\n\taccording to this egg's documentation/README.${NC}\n"
                 exit 1
             elif [[ -n "$(grep -i "Download item" "${STEAMCMD_LOG}")" ]]; then # Steam account does not own base game for mod downloads, or unknown
                 echo -e "\n${RED}[UPDATE]: Cannot download mod - Download failed"
                 echo -e "\t${YELLOW}While unknown, this error is likely due to your host's Steam account not owning the base game.${NC}"
-                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
+                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}\n"
                 exit 1
             elif [[ -n "$(grep -i "0x202\|0x212" "${STEAMCMD_LOG}")" ]]; then # Not enough disk space
                 echo -e "\n${RED}[UPDATE]: Unable to complete download - Not enough storage"
                 echo -e "\t${YELLOW}You have run out of your allotted disk space.${NC}"
-                echo -e "\t${YELLOW}Please contact your administrator/host for potential storage upgrades.${NC}"
+                echo -e "\t${YELLOW}Please contact your administrator/host for potential storage upgrades.${NC}\n"
                 exit 1
             elif [[ -n "$(grep -i "0x606" "${STEAMCMD_LOG}")" ]]; then # Disk write failure
                 echo -e "\n${RED}[UPDATE]: Unable to complete download - Disk write failure"
                 echo -e "\t${YELLOW}This is normally caused by directory permissions issues,\n\tbut could be a more serious hardware issue.${NC}"
-                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}"
+                echo -e "\t${YELLOW}(Please contact your administrator/host if this issue persists)${NC}\n"
                 exit 1
             else # Unknown caught error
                 echo -e "\n${RED}[UPDATE]: ${YELLOW}An unknown error has occurred with SteamCMD. ${CYAN}Skipping download...${NC}"
@@ -94,7 +94,7 @@ function RunSteamCMD { #[Input: int server=0 mod=1; int id]
             fi
         elif [[ $steamcmdExitCode != 0 ]]; then # Unknown fatal error
             echo -e "\n${RED}[UPDATE]: SteamCMD has crashed for an unknown reason!${NC} (Exit code: ${CYAN}${steamcmdExitCode}${NC})"
-            echo -e "\t${YELLOW}(Please contact your administrator/host for support)${NC}"
+            echo -e "\t${YELLOW}(Please contact your administrator/host for support)${NC}\n"
             exit $steamcmdExitCode
         else # Success!
             if [[ $1 == 0 ]]; then # Server
@@ -198,7 +198,7 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
         echo -e "\t${CYAN}Download/Update Creator DLC server files enabled.${NC}\n"
         extraFlags="-beta creatordlc"
     else
-        echo -e "\n"
+        echo -e ""
         extraFlags=""
     fi
     
@@ -206,7 +206,7 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
     
     ## Update mods
     if [[ -n $allMods ]]; then
-        echo -e "\n${GREEN}[UPDATE]:${NC} Checking all Steam Workshop mods for updates..."
+        echo -e "\n${GREEN}[UPDATE]:${NC} Checking all ${CYAN}Steam Workshop mods${NC} for updates..."
         for modID in $(echo $allMods | sed -e 's/@//g')
         do
             if [[ $modID =~ ^[0-9]+$ ]]; then # Only check mods that are in ID-form
@@ -220,14 +220,14 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
                         modName="[NAME UNAVAILABLE]"
                     fi
                     if [[ ! -d @$modID ]]; then
-                        echo -e "\n${GREEN}[UPDATE]:${NC} Downloading new Mod: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
+                        echo -e "${GREEN}[UPDATE]:${NC} Downloading new Mod: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
                     else
-                        echo -e "\n${GREEN}[UPDATE]:${NC} Mod update found for: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
+                        echo -e "${GREEN}[UPDATE]:${NC} Mod update found for: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
                     fi
                     if [[ -n $latestUpdate ]] && [[ $latestUpdate =~ ^[0-9]+$ ]]; then # Notify last update date, if valid
                         echo -e "\tMod was last updated: ${CYAN}$(date -d @${latestUpdate})${NC}"
                     fi
-                    echo -e "\tAttempting mod update/download via SteamCMD..."
+                    echo -e "\tAttempting mod update/download via SteamCMD...\n"
                     RunSteamCMD 1 $modID
                     # Move the downloaded mod to the root directory, and replace existing mod if needed
                     mkdir -p ./@$modID
@@ -237,12 +237,12 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
                     # Make the mods contents all lowercase
                     ModsLowercase @$modID
                     # Move any .bikey's to the keys directory
-                    echo -e "${GREEN}[UPDATE]:${NC} Moving any mod .bikey files to the ~/keys/ folder..."
+                    echo -e "${GREEN}[UPDATE]:${NC} Moving any mod .bikey files to the ~/keys/ folder...\n"
                     find ./@$modID -name "*.bikey" -type f -exec cp {} ./keys \;
                 fi
             fi
         done
-        echo -e "${GREEN}[UPDATE]:${NC} Steam Workshop mod update check complete!"
+        echo -e "${GREEN}[UPDATE]:${NC} Steam Workshop mod update check ${GREEN}complete${NC}!"
     fi
 fi
 
@@ -252,7 +252,7 @@ if [[ ! -f ./${SERVER_BINARY} ]]; then
     echo -e "${YELLOW}Please do the following to resolve this issue:${NC}"
     echo -e "\t${CYAN}- Double check your \"Server Binary\" Startup Variable is correct.${NC}"
     echo -e "\t${CYAN}- Ensure your server has properly installed/updated without errors (reinstalling/updating again may help).${NC}"
-    echo -e "\t${CYAN}- Use the File Manager to check that your specified server binary file is not missing from the root directory.${NC}"
+    echo -e "\t${CYAN}- Use the File Manager to check that your specified server binary file is not missing from the root directory.${NC}\n"
     exit 1
 fi
 
