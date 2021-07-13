@@ -100,7 +100,17 @@ function RunSteamCMD { #[Input: int server=0 mod=1; int id]
             if [[ $1 == 0 ]]; then # Server
                 echo -e "\n${GREEN}[UPDATE]: Game server is up to date!${NC}"
             else # Mod
-                echo -e "\n${GREEN}[UPDATE]: Mod download/update successful!${NC}"
+                # Move the downloaded mod to the root directory, and replace existing mod if needed
+                mkdir -p ./@$2
+                rm -rf ./@$2/*
+                mv -f ./Steam/steamapps/workshop/content/$GAME_ID/$2/* ./@$2
+                rm -d ./Steam/steamapps/workshop/content/$GAME_ID/$2
+                # Make the mods contents all lowercase
+                ModsLowercase @$2
+                # Move any .bikey's to the keys directory
+                echo -e "\tMoving any mod ${CYAN}.bikey${NC} files to the ${CYAN}~/keys/${NC} folder..."
+                find ./@$2 -name "*.bikey" -type f -exec cp {} ./keys \;
+                echo -e "${GREEN}[UPDATE]: Mod download/update successful!${NC}"
             fi
             break
         fi
@@ -120,7 +130,7 @@ function RunSteamCMD { #[Input: int server=0 mod=1; int id]
 
 # Takes a directory (string) as input, and recursively makes all files & folders lowercase.
 function ModsLowercase {
-    echo -e "\n${GREEN}[STARTUP]:${NC} Making mod ${CYAN}$1${NC} files/folders lowercase..."
+    echo -e "\n\tMaking mod ${CYAN}$1${NC} files/folders lowercase..."
     for SRC in `find ./$1 -depth`
     do
         DST=`dirname "${SRC}"`/`basename "${SRC}" | tr '[A-Z]' '[a-z]'`
@@ -220,25 +230,15 @@ if [[ ${UPDATE_SERVER} == 1 ]]; then
                         modName="[NAME UNAVAILABLE]"
                     fi
                     if [[ ! -d @$modID ]]; then
-                        echo -e "${GREEN}[UPDATE]:${NC} Downloading new Mod: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
+                        echo -e "\n${GREEN}[UPDATE]:${NC} Downloading new Mod: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
                     else
-                        echo -e "${GREEN}[UPDATE]:${NC} Mod update found for: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
+                        echo -e "\n${GREEN}[UPDATE]:${NC} Mod update found for: \"${CYAN}${modName}${NC}\" (${CYAN}${modID}${NC})"
                     fi
                     if [[ -n $latestUpdate ]] && [[ $latestUpdate =~ ^[0-9]+$ ]]; then # Notify last update date, if valid
                         echo -e "\tMod was last updated: ${CYAN}$(date -d @${latestUpdate})${NC}"
                     fi
                     echo -e "\tAttempting mod update/download via SteamCMD...\n"
                     RunSteamCMD 1 $modID
-                    # Move the downloaded mod to the root directory, and replace existing mod if needed
-                    mkdir -p ./@$modID
-                    rm -rf ./@$modID/*
-                    mv -f ./Steam/steamapps/workshop/content/$GAME_ID/$modID/* ./@$modID
-                    rm -d ./Steam/steamapps/workshop/content/$GAME_ID/$modID
-                    # Make the mods contents all lowercase
-                    ModsLowercase @$modID
-                    # Move any .bikey's to the keys directory
-                    echo -e "${GREEN}[UPDATE]:${NC} Moving any mod .bikey files to the ~/keys/ folder...\n"
-                    find ./@$modID -name "*.bikey" -type f -exec cp {} ./keys \;
                 fi
             fi
         done
