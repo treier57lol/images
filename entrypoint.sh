@@ -2,7 +2,8 @@
 
 ## File: Pterodactyl Arma 3 Image - entrypoint.sh
 ## Author: David Wolfe (Red-Thirten)
-## Date: 2021/07/11
+## Contributors: Aussie Server Hosts (https://aussieserverhosts.com/)
+## Date: 2021/07/13
 ## License: MIT License
 
 ## === CONSTANTS ===
@@ -143,7 +144,9 @@ function ModsLowercase {
 
 # Removes duplicate items from a semicolon delimited string
 function RemoveDuplicates { #[Input: str - Output: printf of new str]
-    echo $1 | sed -e 's/;/\n/g' | sort -u | xargs printf '%s;'
+    if [[ -n $1 ]]; then # If nothing to compare, skip to prevent extra semicolon being returned
+        echo $1 | sed -e 's/;/\n/g' | sort -u | xargs printf '%s;'
+    fi
 }
 
 # === ENTRYPOINT START ===
